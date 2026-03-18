@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-
+#include <cstdlib>
+#include <cmath>
 //provide it a number and an array to populate it with 
 void sepDigits(int n, std::vector<int>& digitArray){
   while(n>0){
@@ -21,18 +21,37 @@ void printVector(std::vector<int>& digitArray){
   std::cout << '\n';
 }
 
-//provide two arguments, one with the number, and one with the digits it contains 
-int main(){
-  int n;
-  std::cout << "Enter a number: ";
-  std::cin >> n;
 
-  std::vector<int> digitArray;
-  
-  sepDigits(n, digitArray);
-  printVector(digitArray);
-  
-  return 0;
+int main(int argc, char *argv[]){
+  //first argument m, second p
+  int m = std::atoi(argv[1]);
+  int p = std::atoi(argv[2]);
+  std::vector<int> xi{};
 
+  for (int i = std::pow(10, m-1); i < std::pow(10, m); ++i){
+    if (i%p == 0)
+     xi.push_back(i); 
+  }
 
+  std::cout << xi.size() << std::endl;
+  long long xixj = 0;
+  long long xixjnoteq = 0; //exclude cases where i=j
+  long long xixjless = 0; // only include i < j 
+
+  for (int i {0}; i < xi.size(); ++i)
+  {
+    for (int j {0}; j < xi.size(); ++j)
+    {
+      xixj += (xi[i] * xi[j]);
+      if (i != j)
+        xixjnoteq += (xi[i] * xi[j]);
+      if (i < j)
+        xixjless += (xi[i] * xi[j]);
+    }
+  }
+  std::cout << xixj << ' ' << xixjnoteq << ' ' << xixjless << std::endl;
+  std::cout << xixjnoteq << ' ' << xixjless*2 << std::endl; //these are equal
+  //the sum of both triangles are the same
+
+  //excluding i = j cases
 }
